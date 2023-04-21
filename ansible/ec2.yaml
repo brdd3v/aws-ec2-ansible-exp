@@ -1,0 +1,30 @@
+---
+- name: Create EC2 instance
+  amazon.aws.ec2_instance:
+    name: "ec2_instance"
+    image_id: "ami-0d497a49e7d359666" # Ubuntu, 20.04 LTS
+    instance_type: "t2.micro"
+    vpc_subnet_id: "{{ subnet_result.subnet.id }}"
+    security_group: "{{ sg_result.group_id }}"
+    key_name: "{{ ec2_key_result.key.name }}"
+    network:
+      assign_public_ip: true
+    tags: "{{ default_tags }}"
+    state: present
+  register: ec2_instance_result
+
+- name: Wait for EC2 instance to be ready
+  wait_for:
+    host: "{{ item.public_dns_name }}"
+    port: 22
+    search_regex: OpenSSH
+    delay: 30
+  loop: "{{ ec2_instance_result.instances }}"
+  register: wait
+
+- name: Add EC2 instance to the group 
+  add_host:
+    hostname: "{{ item.public_dns_name }}"
+    groups:
+      - ec2hosts
+  loop: "{{ ec2_instance_result.instances }}"
