@@ -1,0 +1,16 @@
+---
+- name: Install Nginx
+  hosts: localhost
+  gather_facts: false
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Ensure Nginx is at the latest version
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Ensure Nginx is running
+      systemd:
+        state: started
+        name: nginx

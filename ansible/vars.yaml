@@ -1,0 +1,5 @@
+---
+aws_region: "eu-central-1"
+default_tags:
+  Env: Dev
+  Owner: Ansible
