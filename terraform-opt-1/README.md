@@ -1,4 +1,4 @@
-## [Terraform](https://www.terraform.io/)
+## [Terraform](https://www.terraform.io/) (Option 1)
 
 To create resources:
 ```
