@@ -2,6 +2,7 @@
 - name: Create a new EC2 key
   amazon.aws.ec2_key:
     name: "ansible_ec2_key"
+    region: "{{ aws_region }}"
     key_type: "rsa"
     tags: "{{ default_tags }}"
     state: present

@@ -2,6 +2,7 @@
 - name: Create EC2 instance
   amazon.aws.ec2_instance:
     name: "ec2_instance"
+    region: "{{ aws_region }}"
     image_id: "ami-0d497a49e7d359666" # Ubuntu, 20.04 LTS
     instance_type: "t2.micro"
     vpc_subnet_id: "{{ subnet_result.subnet.id }}"
